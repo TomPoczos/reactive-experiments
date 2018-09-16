@@ -20,14 +20,14 @@ public class Pipes2 {
     }
   }
 
-  class ScatterGatherPipe { // for latency
+  class ScatterGatherPipe {
 
     public void Process(Message message) {
 
       final Single<Message> rxMsg = Single.just(message);
 
-      final Single<MessagePart1> subResult1 = rxMsg.map(new Processor4());
-      final Single<MessagePart2> subResult2 = rxMsg.map(new Processor5());
+      final Single<MessagePart1> subResult1 = rxMsg.map(new Processor4()); // rxMsg.map(new Processor4()).subscribeOn(Schedulers.newThread())
+      final Single<MessagePart2> subResult2 = rxMsg.map(new Processor5()); // if you'd trade the creation of new threads to get guaranteed parallelism
       final Single<MessagePart3> subResult3 = rxMsg.map(new Processor6());
 
       // message::new can be expanded to the boilerplatey
